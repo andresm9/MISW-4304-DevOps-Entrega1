@@ -1,0 +1,7 @@
+### GET request to example server
+GET http://localhost:5000/prueba
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1OTk4NTQ4NiwianRpIjoiMjFjZjQ0ODctYWQwOC00YzM4LTgzMDMtY2NiOWNmYjdlNWQ5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IkRlZmF1bHRVc2VyIiwibmJmIjoxNzU5OTg1NDg2LCJjc3JmIjoiOGNhMzExYWUtZGY5OC00ZGFhLWI2MzctODEyMGViNTIxNjRkIiwiZXhwIjoxNzYwMjQ0Njg2fQ.9FIKu-xJJGrj3LX8IZQqAPLqrRKYg6s5Bj3nagLD-y8
+
+
+
+###
