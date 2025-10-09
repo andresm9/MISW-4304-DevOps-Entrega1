@@ -1,0 +1,7 @@
+Flask
+Flask-Restful
+Flask-SQLAlchemy
+Flask-JWT-Extended
+Flask-Marshmallow
+Werkzeug
+pytest
