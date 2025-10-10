@@ -21,24 +21,27 @@ logger = logging.getLogger(__name__)
 logger.info("Start Application")
 application = Flask(__name__)
 application.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-application.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=72)
+application.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1440)
 application.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 with application.app_context():
 
     from endpoints import Blacklists
-    from models import db
+    from models import db, ma
 
     logger.info("Start Database...")
     db.init_app(application)
+    db.drop_all()
     db.create_all()
+
+    ma.init_app(application)
 
     jwt = JWTManager(application)
     api = Api(application)
 
     logger.info("Start API Endpoints...")
-    api.add_resource(Blacklists, '/blacklists')
+    api.add_resource(Blacklists, '/blacklists', '/blacklists/<string:email>')
 
     logger.info("Create Access Token...")
     access_token = create_access_token(identity="DefaultUser")
@@ -46,4 +49,4 @@ with application.app_context():
 
 
 if __name__ == '__main__':
-    application.run(debug=True)
+    application.run(debug=False, use_reloader=False)
