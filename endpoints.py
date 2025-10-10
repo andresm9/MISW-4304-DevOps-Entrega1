@@ -2,7 +2,7 @@ import logging
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
-from models import Blacklist, db, BlacklistSchema, BlackListRequestSchema
+from models import Blacklist, db, BlackListRequestSchema
 
 
 logging.basicConfig(level=logging.INFO)
@@ -15,16 +15,18 @@ class Blacklists(Resource):
 
         try:
 
-            logger.info("Received POST request to /blacklists")
-
+            # crear esquema para validar datos de entrada
             request_data = BlackListRequestSchema()
             data = request_data.load(request.json)
 
             logger.info("Request data", data)
 
+            #Si el email ya fue agregado, retornar bad request
             if Blacklist.query.filter_by(email=data['email']).first():
                 return {'message': 'Email Already Blacklisted'}, 400
             else:
+
+                # agregar email a la blacklist
                 new_blacklist = Blacklist()
                 new_blacklist.email = data['email']
                 new_blacklist.app_uuid = data['app_uuid']
@@ -39,19 +41,17 @@ class Blacklists(Resource):
         except Exception as e:
             return {'message': str(e)}, 400
 
-
-
     @jwt_required()
     def get(self, email):
         try:
-
-            logger.info(f"Received GET request to /blacklists/{email}")
-
+            # verificar si el email está en la blacklist
             blacklist_entry = Blacklist.query.filter_by(email=email).first()
 
+            # Si no existe, devolver False
             if not blacklist_entry:
                 return jsonify({"exist": False})
 
+            # Si existe, devolver True y la razón del bloqueo
             return jsonify({"exist": True,"blocked_reason": blacklist_entry.blocked_reason})
 
         except Exception as e:

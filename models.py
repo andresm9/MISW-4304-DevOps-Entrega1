@@ -20,7 +20,7 @@ class Blacklist(db.Model):
     blocked_reason = mapped_column(String, nullable=True)
     ip_address = mapped_column(String, nullable=True)
 
-
+#Esquema para los datos de entrada
 class BlackListRequestSchema(ma.Schema):
     email = fields.fields.Email(required=True)
     app_uuid = fields.fields.UUID(required=True)

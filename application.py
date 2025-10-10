@@ -1,17 +1,12 @@
-import os
 import logging
+import os
 from datetime import timedelta
 
-from flask import Flask, jsonify, request
-from flask_marshmallow import Marshmallow
-from flask_restful import Resource, Api
-
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import JWTManager
-
 from dotenv import load_dotenv
+from flask import Flask
+from flask_jwt_extended import JWTManager
+from flask_jwt_extended import create_access_token
+from flask_restful import Api
 
 load_dotenv()
 
@@ -21,7 +16,7 @@ logger = logging.getLogger(__name__)
 logger.info("Start Application")
 application = Flask(__name__)
 application.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-application.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1440)
+application.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1440) # 60 days
 application.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
