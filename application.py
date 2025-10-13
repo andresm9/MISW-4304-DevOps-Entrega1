@@ -22,7 +22,7 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 with application.app_context():
 
-    from endpoints import Blacklists
+    from endpoints import Blacklists, Endpoint
     from models import db, ma
 
     logger.info("Start Database...")
@@ -36,6 +36,7 @@ with application.app_context():
     api = Api(application)
 
     logger.info("Start API Endpoints...")
+    api.add_resource(Endpoint, "/")
     api.add_resource(Blacklists, '/blacklists', '/blacklists/<string:email>')
 
     logger.info("Create Access Token...")

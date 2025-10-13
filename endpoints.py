@@ -8,6 +8,12 @@ from models import Blacklist, db, BlackListRequestSchema
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+class Endpoint(Resource):
+    def get(self):
+        return {"message": "Blacklist Uniandes - Grupo Nestor Andres Martinez, Juan Alberto Tapia, Sergio Andres Gelvez y Alberto Silva Rueda"},200
+
+
 class Blacklists(Resource):
 
     @jwt_required()
