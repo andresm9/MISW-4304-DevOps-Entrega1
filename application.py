@@ -7,6 +7,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended import create_access_token
 from flask_restful import Api
+from flask_cors import CORS
 
 load_dotenv()
 
@@ -34,6 +35,7 @@ with application.app_context():
 
     jwt = JWTManager(application)
     api = Api(application)
+    cors = CORS(application, resources={r"/*": {"origins": "*"}})
 
     logger.info("Start API Endpoints...")
     api.add_resource(Endpoint, "/")

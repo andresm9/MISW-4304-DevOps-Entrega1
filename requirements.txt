@@ -4,6 +4,7 @@ Flask-SQLAlchemy
 Flask-Migrate
 Flask-JWT-Extended
 Flask-Marshmallow
+Flask-Cors
 marshmallow-sqlalchemy
 Werkzeug
 pytest
