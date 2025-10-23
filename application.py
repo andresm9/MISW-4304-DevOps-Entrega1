@@ -14,37 +14,49 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-logger.info("Start Application")
-application = Flask(__name__)
-application.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
-application.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1440) # 60 days
-application.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+def create_app(test_config: dict | None = None):
+    app = Flask(__name__)
 
-with application.app_context():
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1440) # 60 days
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    from endpoints import Blacklists, Endpoint
-    from models import db, ma
+    if test_config:
+        app.config.update(test_config)
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
-    logger.info("Start Database...")
-    db.init_app(application)
-    db.drop_all()
-    db.create_all()
+    with app.app_context():
+        from models import db,ma
+        from endpoints import Blacklists, Endpoint
 
-    ma.init_app(application)
+        logger.info("Start Database...")
+        db.init_app(app)
+        ma.init_app(app)
 
-    jwt = JWTManager(application)
-    api = Api(application)
-    cors = CORS(application, resources={r"/*": {"origins": "*"}})
+        jwt = JWTManager(app)
+        api = Api(app)
+        cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-    logger.info("Start API Endpoints...")
-    api.add_resource(Endpoint, "/")
-    api.add_resource(Blacklists, '/blacklists', '/blacklists/<string:email>')
+        logger.info("Start API Endpoints...")
+        api.add_resource(Endpoint, "/")
+        api.add_resource(Blacklists, '/blacklists', '/blacklists/<string:email>')
 
-    logger.info("Create Access Token...")
-    access_token = create_access_token(identity="DefaultUser")
-    logger.info("Access Token: %s", access_token)
+        logger.info("Create Access Token...")
+        # creating a token for debugging/logging is optional
+        try:
 
+            access_token = create_access_token(identity="DefaultUser")
+            logger.info("Access Token: %s", access_token)
+
+        except:
+            # during some test setups JWT may not be fully configured; ignore
+            logger.debug("Access token creation skipped.")
+
+    return app
 
 if __name__ == '__main__':
-    application.run(debug=False, use_reloader=False)
+
+    app = create_app()
+    app.run(debug=False, use_reloader=False)
+    # application.run(debug=False, use_reloader=False)

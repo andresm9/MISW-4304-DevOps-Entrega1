@@ -5,19 +5,22 @@ from dotenv import load_dotenv
 load_dotenv()
 print(os.getenv('JWT_SECRET_KEY'))
 
-from application import application, db
+from application import create_app
+from models import db
 
 
 @pytest.fixture()
 def app():
 
-    application.config.update({
+    test_config = {
         'TESTING': True,
         'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
         'SQLALCHEMY_TRACK_MODIFICATIONS': False
-    })
+    }
 
-    with application.app_context():
+    app = create_app(test_config)
+
+    with app.app_context():
         db.create_all()
 
         # Execute SQL statements from `data.sql` (if present)
@@ -33,7 +36,9 @@ def app():
             finally:
                 conn.close()
 
-        yield application
+        yield app
+
+
         db.session.remove()
         db.drop_all()
 
