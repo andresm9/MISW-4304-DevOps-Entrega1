@@ -8,5 +8,6 @@ Flask-Cors
 marshmallow-sqlalchemy
 Werkzeug
 pytest
+coverage
 python-dotenv
 psycopg2-binary
