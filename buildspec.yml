@@ -6,7 +6,6 @@ phases:
     commands:
       - echo Instalando Dependencias...
       - pip install -r requirements.txt
-
   build:
     commands:
       - echo Corriendo Pruebas...

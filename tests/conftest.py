@@ -23,7 +23,6 @@ def app():
     with app.app_context():
         db.create_all()
 
-        # Execute SQL statements from `data.sql` (if present)
         sql_path = os.path.join(os.path.dirname(__file__), 'data.sql')
         if os.path.exists(sql_path):
             with open(sql_path, 'r') as f:
