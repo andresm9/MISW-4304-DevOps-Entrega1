@@ -15,6 +15,16 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo Empaquetando Proyecto
+      - mkdir -p dist
+      - zip -r dist/entrega2_pegasus_artifact.zip application.py endpoints.py models.py requirements.txt
+      - echo Empaquetado Completo.
+
+artifacts:
+  files:
+    - dist/entrega2_pegasus_artifact.zip
+  base-directory: dist
+  discard-paths: yes
 
 reports:
   pytest_reports:
