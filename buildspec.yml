@@ -22,7 +22,7 @@ phases:
 
 artifacts:
   files:
-    - dist/entrega2_pegasus_artifact.zip
+    - entrega2_pegasus_artifact.zip
   base-directory: dist
   discard-paths: yes
 
