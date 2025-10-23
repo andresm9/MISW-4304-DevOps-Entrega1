@@ -43,14 +43,12 @@ def create_app(test_config: dict | None = None):
         api.add_resource(Blacklists, '/blacklists', '/blacklists/<string:email>')
 
         logger.info("Create Access Token...")
-        # creating a token for debugging/logging is optional
         try:
 
             access_token = create_access_token(identity="DefaultUser")
             logger.info("Access Token: %s", access_token)
 
         except:
-            # during some test setups JWT may not be fully configured; ignore
             logger.debug("Access token creation skipped.")
 
     return app
@@ -59,4 +57,3 @@ if __name__ == '__main__':
 
     app = create_app()
     app.run(debug=False, use_reloader=False)
-    # application.run(debug=False, use_reloader=False)
