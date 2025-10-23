@@ -1,0 +1,24 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.13
+    commands:
+      - echo Instalando Dependencias...
+      - pip install -r requirements.txt
+
+  build:
+    commands:
+      - echo Corriendo Pruebas...
+      - python -m pytest --junitxml=reports/test-results.xml
+      - echo Pruebas Completadas.
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+reports:
+  pytest_reports:
+    files:
+      - reports/test-results.xml
+    base-directory: reports
+    file-format: JUNITXML
