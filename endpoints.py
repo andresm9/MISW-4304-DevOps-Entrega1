@@ -35,7 +35,7 @@ class Blacklists(Resource):
                 # agregar email a la blacklist
                 new_blacklist = Blacklist()
                 new_blacklist.email = data['email']
-                new_blacklist.app_uuid = data['app_uuid']
+                new_blacklist.app_uuid = str(data['app_uuid'])
                 new_blacklist.blocked_reason = data['blocked_reason']
                 new_blacklist.ip_address = request.remote_addr
 
