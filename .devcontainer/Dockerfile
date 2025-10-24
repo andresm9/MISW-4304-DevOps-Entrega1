@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/devcontainers/python:3.13-bullseye
+FROM mcr.microsoft.com/devcontainers/python:1-3.13-bullseye
+
 ENV PYTHONUNBUFFERED 1
 
 # [Optional] If your requirements rarely change, uncomment this section to add them to the image.
