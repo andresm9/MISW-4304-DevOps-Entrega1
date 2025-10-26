@@ -14,6 +14,12 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+logger.info("RDS Database Hostname: %s", os.getenv('RDS_HOSTNAME', 'Not Set'))
+logger.info("RDS Database Port: %s", os.getenv('RDS_PORT', 'Not Set'))
+logger.info("RDS Database Name: %s", os.getenv('RDS_DB_NAME', 'Not Set'))
+logger.info("RDS Database Username: %s", os.getenv('RDS_USERNAME', 'Not Set'))
+logger.info("RDS Database password: %s", '********' if os.getenv('RDS_PASSWORD') else 'Not Set')
+
 def create_app(test_config: dict | None = None):
     app = Flask(__name__)
 
@@ -55,5 +61,5 @@ def create_app(test_config: dict | None = None):
 
 if __name__ == '__main__':
 
-    app = create_app()
-    app.run(debug=False, use_reloader=False)
+    application = create_app()
+    application.run(debug=False, use_reloader=False)
