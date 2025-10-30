@@ -9,9 +9,7 @@
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
       "ghcr.io/devcontainers/features/aws-cli:1.1.2": {},
-      "ghrc.io/devcontainers/features/docker-in-docker:1.1.0": {
-        "version": "latest"
-      }
+      "ghrc.io/devcontainers/features/docker-in-docker:2": {}
     },
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
