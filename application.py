@@ -48,12 +48,12 @@ def create_app(test_config: dict | None = None):
 
         logger.info("Start Database...")
         db.init_app(application)
+        #db.create_all()
 
         if test_config:
             logger.info("Testing Mode: Creating Mock SQL Tables...")
         else:
             logger.info("Creating PostgreSQL Tables...")
-            db.create_all()
 
         ma.init_app(application)
 

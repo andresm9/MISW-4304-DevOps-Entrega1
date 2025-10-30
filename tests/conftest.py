@@ -1,6 +1,7 @@
 import os
 import pytest
 from dotenv import load_dotenv
+from testcontainers.postgres import PostgresContainer
 
 load_dotenv()
 print(os.getenv('JWT_SECRET_KEY'))
@@ -8,36 +9,22 @@ print(os.getenv('JWT_SECRET_KEY'))
 from application import create_app
 from models import db
 
+@pytest.fixture(scope="session")
+def postgres_container():
+    with PostgresContainer("postgres:latest", port=5434) as pg:
+        yield pg
 
-@pytest.fixture()
-def app():
-
+@pytest.fixture
+def app(postgres_container):
     test_config = {
-        'TESTING': True,
-        'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
-        'SQLALCHEMY_TRACK_MODIFICATIONS': False
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": postgres_container.get_connection_url()
     }
-
     app = create_app(test_config)
 
     with app.app_context():
         db.create_all()
-
-        sql_path = os.path.join(os.path.dirname(__file__), 'data.sql')
-        if os.path.exists(sql_path):
-            with open(sql_path, 'r') as f:
-                sql = f.read()
-            conn = db.engine.raw_connection()
-            try:
-                cursor = conn.cursor()
-                cursor.executescript(sql)
-                conn.commit()
-            finally:
-                conn.close()
-
         yield app
-
-
         db.session.remove()
         db.drop_all()
 
