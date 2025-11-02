@@ -10,7 +10,7 @@ phases:
     commands:
       - echo Corriendo Pruebas...
       - python -m pytest --junitxml=reports/test-results.xml -v
-      - echo Pruebas Completadas fix 8
+      - echo Pruebas Completadas
 reports:
   pytest_reports:
     files:
