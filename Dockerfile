@@ -8,5 +8,4 @@ COPY . /app/
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 EXPOSE 5000
-
 CMD ["gunicorn","wsgi:applicantion","--log-file","-","--bind","0.0.0.0:5000"]
