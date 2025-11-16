@@ -1,4 +1,4 @@
-FROM python:3.13-slim-buster AS builder
+FROM python:3.13-slim AS builder
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
