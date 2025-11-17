@@ -1,0 +1,24 @@
+{
+    "executionRoleArn": "arn:aws:iam::972067303079:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "name": "pegasus-entrega3-container",
+            "image": "972067303079.dkr.ecr.us-east-1.amazonaws.com/pegasus/repository:latest",
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 5000,
+                    "protocol": "tcp"
+                }
+            ]
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "512",
+    "memory": "1024",
+    "family": "entrega3-pegasus-taskdefinition"
+}
