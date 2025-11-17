@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class Endpoint(Resource):
     def get(self):
-        return {"message": "Blacklist Uniandes Entrega 3 (Escenario 2 TODO OK) - Grupo Nestor Andres Martinez, Juan Alberto Tapia, Sergio Andres Gelvez y Alberto Silva Rueda"},200
+        return {"message": "Blacklist Uniandes Entrega 3 (Escenario 3 Entrega Continua Fallida) - Grupo Nestor Andres Martinez, Juan Alberto Tapia, Sergio Andres Gelvez y Alberto Silva Rueda"},200
 
 
 class Blacklists(Resource):
