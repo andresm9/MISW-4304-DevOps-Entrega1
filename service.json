@@ -1,0 +1,26 @@
+{
+    "cluster": "favorable-gecko-o8je8k",
+    "serviceName": "entrega3-pegasus-taskdefinition-service",
+    "taskDefinition": "entrega3-pegasus-taskdefinition",
+    "loadBalancers": [
+        {
+            "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:972067303079:targetgroup/entrega3-target-group1/da1be078bd238f9c",
+            "containerName": "pegasus-entrega3-container",
+            "containerPort": 5000
+        }
+    ],
+    "launchType": "FARGATE",
+    "schedulingStrategy": "REPLICA",
+    "deploymentController": {
+        "type": "CODE_DEPLOY"
+    },
+    "platformVersion": "LATEST",
+    "networkConfiguration": {
+       "awsvpcConfiguration": {
+          "assignPublicIp": "ENABLED",
+          "securityGroups": [ "sg-060b02d1c93a6febb" ],
+          "subnets": [ "subnet-08241db31f3bcaa14","subnet-0a67bd49f8b2a60ae" ]
+       }
+    },
+    "desiredCount": 1
+}
