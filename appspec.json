@@ -5,7 +5,7 @@
             "TargetService": {
                 "Type": "AWS::ECS::Service",
                 "Properties": {
-                    "TaskDefinition": "arn:aws:ecs:us-east-1:972067303079:task-definition/entrega3-pegasus-taskdefinition:3",
+                    "TaskDefinition": "arn:aws:ecs:us-east-1:972067303079:task-definition/entrega3-pegasus-taskdefinition",
                     "LoadBalancerInfo": {
                         "ContainerName": "pegasus-entrega3-container",
                         "ContainerPort": 5000
