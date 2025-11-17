@@ -18,7 +18,7 @@ phases:
   build:
     commands:
       - echo Construyendo la imagen Docker...
-      - docker build -t $REPOSITORY_URI:lates .
+      - docker build -t pegasus/repository .
       - echo Etiquetando la imagen Docker...
       - docker tag pegasus/repository:latest $REPOSITORY_URI:latest
 
