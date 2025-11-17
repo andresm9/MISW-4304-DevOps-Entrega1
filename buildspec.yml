@@ -1,25 +1,53 @@
 version: 0.2
 phases:
+  install:
+    runtime-versions:
+      python: 3.13
+    commands:
+      - echo Instalando Dependencias...
+      - pip install -r requirements.txt
 
   pre_build:
     commands:
-        - echo Conectando con el Registro de Contenedores...
-        - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 972067303079.dkr.ecr.us-east-1.amazonaws.com
-
+      - echo Corriendo Pruebas...
+      - python -m pytest --junitxml=reports/test-results.xml -v
+      - echo Pruebas Completadas
+      - echo Conectando con el Registro de Contenedores...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 972067303079.dkr.ecr.us-east-1.amazonaws.com
+      - REPOSITORY_URI=972067303079.dkr.ecr.us-east-1.amazonaws.com/pegasus/repository
   build:
     commands:
       - echo Construyendo la imagen Docker...
-      - docker build -t pegasus/repository .
+      - docker build -t $REPOSITORY_URI:lates .
       - echo Etiquetando la imagen Docker...
-      - docker tag pegasus/repository:latest 972067303079.dkr.ecr.us-east-1.amazonaws.com/pegasus/repository:latest
+      - docker tag pegasus/repository:latest $REPOSITORY_URI:latest
 
-    post_build:
-      commands:
-        - echo Enviando la imagen Docker al Registro...
-        - docker push 972067303079.dkr.ecr.us-east-1.amazonaws.com/pegasus/repository:latest
-        - echo Construcción y push completados.
+  post_build:
+    commands:
+      - echo Enviando la imagen Docker al Registro...
+      - docker push $REPOSITORY_URI:latest
+      - echo Construcción y push completados.
+      - echo Escribiendo archivos de Definicion
+      - printf '[{"name":"pegasus-entrega3-container","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
+      - printf '{"ImageURI":"%s"}' $REPOSITORY_URI:latest > imageDetail.json
 
+reports:
+  pytest_reports:
+    files:
+      - test-results.xml
+    base-directory: reports
+    file-format: JUNITXML
 
 artifacts:
     files:
         - '**/*'
+        - imagedefinitions.json
+        - imageDetail.json
+    secondary-artifacts:
+      DefinitionArtifact:
+        files:
+          - appspec.json
+          - taskdef.json
+      ImageArtifact:
+        files:
+          - imageDetail.json
