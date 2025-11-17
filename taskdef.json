@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "pegasus-entrega3-container",
-            "image": "<IMAGE1_NAME>",
+            "image": "<NULL_IMAGE>",
             "environment": [
                 {
                     "name": "RDS_HOSTNAME",
