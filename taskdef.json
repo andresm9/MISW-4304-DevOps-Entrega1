@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "pegasus-entrega3-container",
-            "image": "972067303079.dkr.ecr.us-east-1.amazonaws.com/pegasus/repository:latest",
+            "image": "<IMAGE1_NAME>",
             "essential": true,
             "portMappings": [
                 {
