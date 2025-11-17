@@ -4,6 +4,32 @@
         {
             "name": "pegasus-entrega3-container",
             "image": "<IMAGE1_NAME>",
+            "environment": [
+                {
+                    "name": "RDS_HOSTNAME",
+                    "value": "awseb-e-au2mrn3iyd-stack-awsebrdsdatabase-bkl6gq6lii11.curmwkwaetr4.us-east-1.rds.amazonaws.com"
+                },
+                {
+                    "name": "RDS_PORT",
+                    "value": "5432"
+                },
+                {
+                    "name": "RDS_DB_NAME",
+                    "value": "blacklist"
+                },
+                {
+                    "name": "RDS_USERNAME",
+                    "value": "ebroot"
+                },
+                {
+                    "name": "RDS_PASSWORD",
+                    "value": "pegasus2025"
+                },
+                {
+                    "name": "JWT_SECRET_KEY",
+                    "value": "MISW-4304-DevOps-Entrega1"
+                }
+            ],
             "essential": true,
             "portMappings": [
                 {
