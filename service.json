@@ -5,7 +5,7 @@
     "loadBalancers": [
         {
             "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:972067303079:targetgroup/entrega3-target-group1/da1be078bd238f9c",
-            "containerName": "pegasus-entrega3-container",
+            "containerName": "pegasus-entrega4-container",
             "containerPort": 5000
         }
     ],
