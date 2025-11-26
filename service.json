@@ -1,6 +1,6 @@
 {
     "cluster": "favorable-gecko-o8je8k",
-    "serviceName": "entrega3-pegasus-taskdefinition-service",
+    "serviceName": "pegasus-entrega4-service",
     "taskDefinition": "entrega3-pegasus-taskdefinition",
     "loadBalancers": [
         {
