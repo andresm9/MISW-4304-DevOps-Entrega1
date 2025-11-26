@@ -9,11 +9,15 @@ from flask_jwt_extended import create_access_token
 from flask_restful import Api
 from flask_cors import CORS
 
+import newrelic.agent
+
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+logger.info("Initializing New Relic Agent...")
+newrelic.agent.initialize(os.getenv('NEW_RELIC_CONFIG_FILE', 'newrelic.ini'))
 
 def create_app(test_config: dict | None = None):
 
