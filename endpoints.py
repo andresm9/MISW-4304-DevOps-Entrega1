@@ -2,6 +2,7 @@ import logging
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 from flask_restful import Resource
+import newrelic
 from models import Blacklist, db, BlackListRequestSchema
 
 
@@ -29,7 +30,10 @@ class Blacklists(Resource):
 
             #Si el email ya fue agregado, retornar bad request
             if Blacklist.query.filter_by(email=data['email']).first():
+
+                newrelic.agent.notice_error()
                 return {'message': 'Email Already Blacklisted'}, 400
+            
             else:
 
                 # agregar email a la blacklist
@@ -45,6 +49,7 @@ class Blacklists(Resource):
                 return {'message': 'Email Blacklisted Successfully'}, 201
 
         except Exception as e:
+            newrelic.agent.notice_error()
             return {'message': str(e)}, 400
 
     @jwt_required()
@@ -61,4 +66,5 @@ class Blacklists(Resource):
             return jsonify({"exist": True,"blocked_reason": blacklist_entry.blocked_reason})
 
         except Exception as e:
+            newrelic.agent.notice_error()
             return {'message': str(e)}, 400
